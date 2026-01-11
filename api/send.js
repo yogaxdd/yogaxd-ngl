@@ -17,9 +17,9 @@ export default async function handler(req, res) {
         const { username, question, deviceId } = req.body;
 
         if (!username || !question) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Username dan question wajib diisi' 
+            return res.status(400).json({
+                success: false,
+                message: 'Username dan question wajib diisi'
             });
         }
 
@@ -31,9 +31,10 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'Origin': 'https://ngl.link',
-                'Referer': 'https://ngl.link/'
+                'Referer': `https://ngl.link/${username}`
             },
             body: new URLSearchParams({
                 username: username,
@@ -44,7 +45,28 @@ export default async function handler(req, res) {
             })
         });
 
-        const data = await response.json();
+        // Get response as text first
+        const responseText = await response.text();
+
+        // Try to parse as JSON
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            // If not valid JSON, check if it's an error page
+            if (responseText.includes('<!DOCTYPE') || responseText.includes('<html')) {
+                // It's an HTML error page
+                return res.status(response.status || 500).json({
+                    success: false,
+                    message: 'NGL returned error page. Mungkin rate limited atau username tidak valid.'
+                });
+            }
+            // Return the raw text as error
+            return res.status(response.status || 500).json({
+                success: false,
+                message: responseText || 'Unknown error from NGL'
+            });
+        }
 
         return res.status(response.status).json({
             success: response.ok,
@@ -53,9 +75,9 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Proxy error:', error);
-        return res.status(500).json({ 
-            success: false, 
-            message: 'Proxy error: ' + error.message 
+        return res.status(500).json({
+            success: false,
+            message: 'Proxy error: ' + error.message
         });
     }
 }
