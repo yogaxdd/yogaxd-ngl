@@ -222,6 +222,7 @@
         .range-slider {
             flex: 1;
             -webkit-appearance: none;
+            appearance: none;
             height: 12px;
             background: var(--black);
             border: none;
@@ -617,6 +618,181 @@
 
         input[type="number"] {
             -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header {
+                margin-bottom: 1.5rem;
+            }
+
+            .logo {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .logo h1 {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            .header .tagline {
+                font-size: 0.7rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .card-header {
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+            }
+
+            .card-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.8rem;
+            }
+
+            input,
+            textarea {
+                padding: 0.85rem;
+                font-size: 0.9rem;
+            }
+
+            textarea {
+                min-height: 90px;
+            }
+
+            .btn {
+                padding: 0.85rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 0.75rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.65rem;
+            }
+
+            .progress-bar {
+                height: 18px;
+            }
+
+            .console-body {
+                height: 200px;
+                font-size: 0.75rem;
+                padding: 0.75rem;
+            }
+
+            .console-header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .console-title {
+                font-size: 0.8rem;
+            }
+
+            .console-btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
+
+            .footer {
+                padding: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .footer p {
+                font-size: 0.8rem;
+            }
+
+            .range-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .range-value {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .status-badge {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.75rem;
+            }
+
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                gap: 0.5rem;
+            }
+
+            .stat-value {
+                font-size: 1.3rem;
+            }
+
+            .console-body {
+                height: 180px;
+                font-size: 0.7rem;
+            }
+
+            .log-entry {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .log-time {
+                font-size: 0.65rem;
+            }
         }
     </style>
 </head>
