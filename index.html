@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YogaxD Spammer NGL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #E8E4D9;
+            --black: #1a1a1a;
+            --white: #ffffff;
+            --yellow: #FFDE59;
+            --pink: #FF6B9D;
+            --blue: #4ECDC4;
+            --purple: #9B5DE5;
+            --orange: #FF9F43;
+            --green: #00D26A;
+            --red: #FF4757;
+            --border-width: 3px;
+            --shadow-offset: 6px;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-main);
+            color: var(--black);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* Neobrutalist Pattern Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle, var(--black) 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--yellow);
+            border: var(--border-width) solid var(--black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            transform: rotate(-3deg);
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            transform: rotate(1deg);
+        }
+
+        .header .tagline {
+            display: inline-block;
+            background: var(--pink);
+            color: var(--black);
+            padding: 0.5rem 1.25rem;
+            border: var(--border-width) solid var(--black);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transform: rotate(-1deg);
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards - Neobrutalist Style */
+        .card {
+            background: var(--white);
+            border: var(--border-width) solid var(--black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--black);
+            padding: 1.75rem;
+            transition: all 0.15s ease;
+        }
+
+        .card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--black);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: var(--border-width) solid var(--black);
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--blue);
+            border: var(--border-width) solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .card-icon.purple {
+            background: var(--purple);
+        }
+
+        .card-icon.yellow {
+            background: var(--yellow);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Elements - Neobrutalist */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--white);
+            border: var(--border-width) solid var(--black);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.15s ease;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #888;
+        }
+
+        /* Range Slider - Neobrutalist */
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .range-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 12px;
+            background: var(--black);
+            border: none;
+            cursor: pointer;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: var(--yellow);
+            border: var(--border-width) solid var(--black);
+            cursor: grab;
+        }
+
+        .range-slider::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            background: var(--orange);
+        }
+
+        .range-value {
+            min-width: 80px;
+            padding: 0.75rem;
+            background: var(--yellow);
+            border: var(--border-width) solid var(--black);
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons - Neobrutalist */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: var(--border-width) solid var(--black);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.15s ease;
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--black);
+        }
+
+        .btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: var(--black);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* Stats Grid - Neobrutalist */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: var(--border-width) solid var(--black);
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+
+        .stat-card:nth-child(1) {
+            background: var(--yellow);
+        }
+
+        .stat-card:nth-child(2) {
+            background: var(--green);
+        }
+
+        .stat-card:nth-child(3) {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .stat-card:nth-child(4) {
+            background: var(--blue);
+        }
+
+        .stat-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Progress Bar - Neobrutalist */
+        .progress-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .progress-percent {
+            font-weight: 700;
+            background: var(--yellow);
+            padding: 0.25rem 0.5rem;
+            border: 2px solid var(--black);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: var(--white);
+            border: var(--border-width) solid var(--black);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: repeating-linear-gradient(45deg,
+                    var(--green),
+                    var(--green) 10px,
+                    var(--blue) 10px,
+                    var(--blue) 20px);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Console - Neobrutalist */
+        .console-container {
+            background: var(--black);
+            border: var(--border-width) solid var(--black);
+            overflow: hidden;
+        }
+
+        .console-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--purple);
+            border-bottom: var(--border-width) solid var(--black);
+        }
+
+        .console-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .console-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .console-dot {
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--black);
+        }
+
+        .console-dot.red {
+            background: var(--red);
+        }
+
+        .console-dot.yellow {
+            background: var(--yellow);
+        }
+
+        .console-dot.green {
+            background: var(--green);
+        }
+
+        .console-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .console-btn {
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border: 2px solid var(--black);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .console-btn:hover {
+            background: var(--yellow);
+        }
+
+        .console-body {
+            height: 280px;
+            overflow-y: auto;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--white);
+        }
+
+        .console-body::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .console-body::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        .console-body::-webkit-scrollbar-thumb {
+            background: var(--purple);
+            border: 2px solid var(--black);
+        }
+
+        .log-entry {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed #333;
+        }
+
+        .log-time {
+            color: var(--purple);
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        .log-message {
+            flex: 1;
+        }
+
+        .log-message.success {
+            color: var(--green);
+        }
+
+        .log-message.error {
+            color: var(--red);
+        }
+
+        .log-message.warning {
+            color: var(--orange);
+        }
+
+        .log-message.info {
+            color: var(--blue);
+        }
+
+        /* Status Badge - Neobrutalist */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: var(--border-width) solid var(--black);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-badge.idle {
+            background: #ddd;
+        }
+
+        .status-badge.running {
+            background: var(--green);
+            animation: blink 0.8s infinite;
+        }
+
+        .status-badge.stopped {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: currentColor;
+            border: 2px solid var(--black);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: var(--yellow);
+            border: var(--border-width) solid var(--black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--black);
+        }
+
+        .footer p {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Row Grid */
+        .row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .row-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Input Number */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <h1>YogaxD Spammer NGL</h1>
+            </div>
+            <span class="tagline">Anonymous Message Blaster</span>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Configuration Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon yellow">⚙️</div>
+                    <h2 class="card-title">Configuration</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Username</label>
+                    <input type="text" id="username" placeholder="username atau ngl.link/username">
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="message" placeholder="Tulis pesan yang ingin dikirim..."></textarea>
+                </div>
+
+                <div class="row-grid">
+                    <div class="form-group">
+                        <label>Jumlah Pesan</label>
+                        <input type="number" id="count" value="10" min="1" max="1000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delay (ms)</label>
+                        <div class="range-container">
+                            <input type="range" class="range-slider" id="delay" min="100" max="5000" value="1000">
+                            <div class="range-value" id="delayValue">1000ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="startBtn">
+                        <span>▶</span> MULAI
+                    </button>
+                    <button class="btn btn-danger" id="stopBtn" disabled>
+                        <span>■</span> STOP
+                    </button>
+                </div>
+            </div>
+
+            <!-- Monitoring Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon purple">📊</div>
+                    <h2 class="card-title">Monitoring</h2>
+                    <div style="margin-left: auto;">
+                        <span class="status-badge idle" id="statusBadge">
+                            <span class="status-dot"></span>
+                            <span id="statusText">IDLE</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalSent">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="successCount">0</div>
+                        <div class="stat-label">Success</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="failedCount">0</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="speed">0/s</div>
+                        <div class="stat-label">Speed</div>
+                    </div>
+                </div>
+
+                <!-- Progress -->
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">Progress</span>
+                        <span class="progress-percent" id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Console -->
+                <div class="console-container">
+                    <div class="console-header">
+                        <div class="console-title">
+                            <div class="console-dots">
+                                <span class="console-dot red"></span>
+                                <span class="console-dot yellow"></span>
+                                <span class="console-dot green"></span>
+                            </div>
+                            <span>Console</span>
+                        </div>
+                        <div class="console-actions">
+                            <button class="console-btn" id="exportBtn">📥 Export</button>
+                            <button class="console-btn" id="clearBtn">🗑️ Clear</button>
+                        </div>
+                    </div>
+                    <div class="console-body" id="console">
+                        <div class="log-entry">
+                            <span class="log-time">[--:--:--]</span>
+                            <span class="log-message info">Ready to blast messages...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with 💥 for educational purposes only</p>
+        </footer>
+    </div>
+
+    <script>
+        // Elements
+        const usernameInput = document.getElementById('username');
+        const messageInput = document.getElementById('message');
+        const countInput = document.getElementById('count');
+        const delaySlider = document.getElementById('delay');
+        const delayValue = document.getElementById('delayValue');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const consoleEl = document.getElementById('console');
+        const statusBadge = document.getElementById('statusBadge');
+        const statusText = document.getElementById('statusText');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const totalSentEl = document.getElementById('totalSent');
+        const successCountEl = document.getElementById('successCount');
+        const failedCountEl = document.getElementById('failedCount');
+        const speedEl = document.getElementById('speed');
+        const exportBtn = document.getElementById('exportBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // State
+        let isRunning = false;
+        let shouldStop = false;
+        let stats = {
+            total: 0,
+            success: 0,
+            failed: 0,
+            startTime: null
+        };
+        let logs = [];
+
+        // Update delay display
+        delaySlider.addEventListener('input', (e) => {
+            delayValue.textContent = `${e.target.value}ms`;
+        });
+
+        // Extract username from NGL link
+        function extractUsername(input) {
+            input = input.trim();
+            if (input.includes('ngl.link/')) {
+                const match = input.match(/ngl\.link\/([^\/\?]+)/);
+                return match ? match[1] : input;
+            }
+            if (input.startsWith('@')) {
+                return input.slice(1);
+            }
+            return input;
+        }
+
+        // Generate device ID
+        function generateDeviceId() {
+            return `anon-${Math.random().toString(36).substr(2, 9)}${Date.now()}`;
+        }
+
+        // Add log entry
+        function addLog(message, type = 'info') {
+            const now = new Date();
+            const time = now.toTimeString().split(' ')[0];
+            const logEntry = { time, message, type };
+            logs.push(logEntry);
+
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `
+                <span class="log-time">[${time}]</span>
+                <span class="log-message ${type}">${message}</span>
+            `;
+            consoleEl.appendChild(entry);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        // Update stats display
+        function updateStats() {
+            totalSentEl.textContent = stats.total;
+            successCountEl.textContent = stats.success;
+            failedCountEl.textContent = stats.failed;
+
+            if (stats.startTime) {
+                const elapsed = (Date.now() - stats.startTime) / 1000;
+                const speed = elapsed > 0 ? (stats.total / elapsed).toFixed(1) : 0;
+                speedEl.textContent = `${speed}/s`;
+            }
+        }
+
+        // Update progress
+        function updateProgress(current, total) {
+            const percent = Math.round((current / total) * 100);
+            progressFill.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}%`;
+        }
+
+        // Set status
+        function setStatus(status) {
+            statusBadge.className = `status-badge ${status}`;
+            const statusLabels = {
+                idle: 'IDLE',
+                running: 'RUNNING',
+                stopped: 'STOPPED'
+            };
+            statusText.textContent = statusLabels[status] || status;
+        }
+
+        // Send single message
+        async function sendMessage(username, message) {
+            const deviceId = generateDeviceId();
+
+            try {
+                const response = await fetch('/api/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        question: message,
+                        deviceId: deviceId
+                    })
+                });
+
+                const data = await response.json();
+                return { success: response.ok, data };
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Sleep function
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Start spam
+        async function startSpam() {
+            const username = extractUsername(usernameInput.value);
+            const message = messageInput.value.trim();
+            const count = parseInt(countInput.value);
+            const delay = parseInt(delaySlider.value);
+
+            // Validation
+            if (!username) {
+                addLog('❌ Username tidak boleh kosong!', 'error');
+                return;
+            }
+            if (!message) {
+                addLog('❌ Pesan tidak boleh kosong!', 'error');
+                return;
+            }
+            if (count < 1) {
+                addLog('❌ Jumlah pesan minimal 1!', 'error');
+                return;
+            }
+
+            // Reset state
+            isRunning = true;
+            shouldStop = false;
+            stats = { total: 0, success: 0, failed: 0, startTime: Date.now() };
+            updateStats();
+            updateProgress(0, count);
+            setStatus('running');
+
+            // Update buttons
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+
+            addLog(`🚀 Memulai spam ke @${username}...`, 'info');
+            addLog(`📨 Target: ${count} pesan | Delay: ${delay}ms`, 'info');
+
+            for (let i = 0; i < count; i++) {
+                if (shouldStop) {
+                    addLog('⛔ Spam dihentikan oleh user', 'warning');
+                    break;
+                }
+
+                const result = await sendMessage(username, message);
+                stats.total++;
+
+                if (result.success) {
+                    stats.success++;
+                    addLog(`✅ [${i + 1}/${count}] Pesan terkirim`, 'success');
+                } else {
+                    stats.failed++;
+                    const errorMsg = result.error || result.data?.message || 'Unknown error';
+                    addLog(`❌ [${i + 1}/${count}] Gagal: ${errorMsg}`, 'error');
+                }
+
+                updateStats();
+                updateProgress(i + 1, count);
+
+                if (i < count - 1 && !shouldStop) {
+                    await sleep(delay);
+                }
+            }
+
+            // Complete
+            isRunning = false;
+            setStatus(shouldStop ? 'stopped' : 'idle');
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+
+            const successRate = stats.total > 0 ? ((stats.success / stats.total) * 100).toFixed(1) : 0;
+            addLog(`📊 Selesai! Success rate: ${successRate}%`, 'info');
+        }
+
+        // Stop spam
+        function stopSpam() {
+            shouldStop = true;
+            stopBtn.disabled = true;
+        }
+
+        // Export logs
+        function exportLogs() {
+            const logText = logs.map(l => `[${l.time}] ${l.message}`).join('\n');
+            const blob = new Blob([logText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ngl-spam-logs-${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            addLog('📥 Logs exported successfully', 'info');
+        }
+
+        // Clear console
+        function clearConsole() {
+            consoleEl.innerHTML = '';
+            logs = [];
+            addLog('🗑️ Console cleared', 'info');
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', startSpam);
+        stopBtn.addEventListener('click', stopSpam);
+        exportBtn.addEventListener('click', exportLogs);
+        clearBtn.addEventListener('click', clearConsole);
+    </script>
+</body>
+
+</html>
