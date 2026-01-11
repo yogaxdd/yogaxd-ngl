@@ -753,7 +753,103 @@
     </div>
 
     <script>
-        // Elements
+        (function () {
+            const _0x1a2b = ['toString', 'apply', 'constructor', 'prototype'];
+            let devToolsOpen = false;
+
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            const checkDevTools = function () {
+                if (isMobile) return;
+                const threshold = 160;
+                const widthDiff = window.outerWidth - window.innerWidth > threshold;
+                const heightDiff = window.outerHeight - window.innerHeight > threshold;
+                if (widthDiff || heightDiff) {
+                    if (!devToolsOpen) {
+                        devToolsOpen = true;
+                        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#1a1a1a;color:#ff4757;font-family:monospace;font-size:24px;text-align:center;padding:20px;">⛔ DevTools Detected<br><small style="font-size:14px;">Close DevTools to continue</small></div>';
+                    }
+                } else {
+                    devToolsOpen = false;
+                }
+            };
+
+            setInterval(checkDevTools, 500);
+
+            const _0xc = function () {
+                if (isMobile) return;
+                const start = performance.now();
+                debugger;
+                const end = performance.now();
+                if (end - start > 100) {
+                    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#1a1a1a;color:#ff4757;font-family:monospace;font-size:24px;">⛔ Access Denied</div>';
+                }
+            };
+
+            setInterval(_0xc, 1000);
+
+            document.addEventListener('contextmenu', function (e) {
+                if (isMobile) return true;
+                e.preventDefault();
+                return false;
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                    (e.ctrlKey && e.key === 'U') ||
+                    (e.ctrlKey && e.key === 'S')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            console.log = function () { };
+            console.warn = function () { };
+            console.error = function () { };
+            console.table = function () { };
+            console.dir = function () { };
+            console.debug = function () { };
+            console.info = function () { };
+
+            setInterval(function () {
+                console.clear();
+            }, 100);
+
+            const _0xtoString = Function.prototype.toString;
+            Function.prototype.toString = function () {
+                if (this === checkDevTools || this === _0xc) {
+                    return 'function () { [native code] }';
+                }
+                return _0xtoString.call(this);
+            };
+
+            Object.defineProperty(window, 'devtools', {
+                get: function () { return undefined; },
+                set: function () { return; }
+            });
+
+            document.addEventListener('selectstart', function (e) {
+                if (isMobile) return true;
+                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('copy', function (e) {
+                if (isMobile) return true;
+                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('dragstart', function (e) {
+                if (isMobile) return true;
+                e.preventDefault();
+            });
+        })();
+    </script>
+    <script>
         const usernameInput = document.getElementById('username');
         const messageInput = document.getElementById('message');
         const countInput = document.getElementById('count');
@@ -864,6 +960,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({
                         username: username,

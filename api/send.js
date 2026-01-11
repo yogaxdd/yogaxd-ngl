@@ -1,7 +1,7 @@
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -11,6 +11,70 @@ module.exports = async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    const userAgent = (req.headers['user-agent'] || '').toLowerCase();
+    const blockedAgents = [
+        'curl', 'wget', 'python', 'requests', 'httpie', 'postman',
+        'insomnia', 'axios', 'node-fetch', 'got', 'superagent',
+        'scrapy', 'beautifulsoup', 'selenium', 'puppeteer', 'playwright',
+        'httrack', 'mechanize', 'aiohttp', 'httpx', 'java', 'go-http',
+        'ruby', 'perl', 'libwww', 'okhttp', 'apache-http', 'bot', 'spider',
+        'crawler', 'scraper', 'headless'
+    ];
+
+    for (const agent of blockedAgents) {
+        if (userAgent.includes(agent)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Access denied'
+            });
+        }
+    }
+
+    if (!userAgent.includes('mozilla') && !userAgent.includes('chrome') && !userAgent.includes('safari')) {
+        return res.status(403).json({
+            success: false,
+            message: 'Invalid request'
+        });
+    }
+
+    const origin = req.headers['origin'] || '';
+    const referer = req.headers['referer'] || '';
+    const xRequestedWith = req.headers['x-requested-with'] || '';
+
+    const allowedOrigins = [
+        'https://yogaxd-ngl.vercel.app',
+        'https://yogaxd-ngl.zone.id',
+        'http://localhost',
+        'http://127.0.0.1'
+    ];
+
+    const isAllowedOrigin = allowedOrigins.some(allowed =>
+        origin.includes(allowed.replace('https://', '').replace('http://', '')) ||
+        referer.includes(allowed.replace('https://', '').replace('http://', ''))
+    );
+
+    if (!isAllowedOrigin && origin !== '' && !origin.includes('localhost') && !origin.includes('127.0.0.1')) {
+        return res.status(403).json({
+            success: false,
+            message: 'Unauthorized origin'
+        });
+    }
+
+    if (xRequestedWith !== 'XMLHttpRequest') {
+        return res.status(403).json({
+            success: false,
+            message: 'Invalid request type'
+        });
+    }
+
+    const contentType = req.headers['content-type'] || '';
+    if (!contentType.includes('application/json')) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid content type'
+        });
+    }
+
     try {
         const { username, question, deviceId } = req.body;
 
@@ -18,6 +82,20 @@ module.exports = async function handler(req, res) {
             return res.status(400).json({
                 success: false,
                 message: 'Username dan question wajib diisi'
+            });
+        }
+
+        if (typeof username !== 'string' || typeof question !== 'string') {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid data type'
+            });
+        }
+
+        if (username.length > 30 || question.length > 500) {
+            return res.status(400).json({
+                success: false,
+                message: 'Data too long'
             });
         }
 
