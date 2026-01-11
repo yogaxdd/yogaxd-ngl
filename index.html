@@ -910,9 +910,28 @@
             return hashHex.substring(0, 32);
         }
 
-        let browserFingerprint = null;
-        generateFingerprint().then(fp => {
-            browserFingerprint = fp;
+        const SECRET_KEY = 'YogaxD_NGL_2026_AntiScrape';
+
+        async function generateSignedToken() {
+            const fp = await generateFingerprint();
+            const ts = Math.floor(Date.now() / 1000);
+            const payload = `${fp}:${ts}:${SECRET_KEY}`;
+
+            const encoder = new TextEncoder();
+            const data = encoder.encode(payload);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const sig = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
+
+            return `${fp}.${ts}.${sig}`;
+        }
+
+        let browserToken = null;
+        generateSignedToken().then(token => {
+            browserToken = token;
+            setInterval(async () => {
+                browserToken = await generateSignedToken();
+            }, 30000);
         });
     </script>
     <script>
@@ -1022,6 +1041,7 @@
             const deviceId = generateDeviceId();
 
             try {
+                const token = browserToken || await generateSignedToken();
                 const response = await fetch('/api/send.js', {
                     method: 'POST',
                     headers: {
@@ -1032,7 +1052,7 @@
                         username: username,
                         question: message,
                         deviceId: deviceId,
-                        fp: browserFingerprint
+                        token: token
                     })
                 });
 

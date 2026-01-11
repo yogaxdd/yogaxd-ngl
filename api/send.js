@@ -1,3 +1,52 @@
+const crypto = require('crypto');
+
+const SECRET_KEY = 'YogaxD_NGL_2026_AntiScrape';
+const TOKEN_EXPIRY_SECONDS = 120;
+
+function validateToken(token) {
+    if (!token || typeof token !== 'string') {
+        return { valid: false, reason: 'Missing token' };
+    }
+
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+        return { valid: false, reason: 'Invalid token format' };
+    }
+
+    const [fp, ts, sig] = parts;
+
+    if (!/^[a-f0-9]{32}$/.test(fp)) {
+        return { valid: false, reason: 'Invalid fingerprint' };
+    }
+
+    const timestamp = parseInt(ts, 10);
+    if (isNaN(timestamp)) {
+        return { valid: false, reason: 'Invalid timestamp' };
+    }
+
+    const now = Math.floor(Date.now() / 1000);
+    if (now - timestamp > TOKEN_EXPIRY_SECONDS) {
+        return { valid: false, reason: 'Token expired' };
+    }
+
+    if (timestamp > now + 60) {
+        return { valid: false, reason: 'Invalid timestamp' };
+    }
+
+    if (!/^[a-f0-9]{16}$/.test(sig)) {
+        return { valid: false, reason: 'Invalid signature format' };
+    }
+
+    const payload = `${fp}:${ts}:${SECRET_KEY}`;
+    const expectedSig = crypto.createHash('sha256').update(payload).digest('hex').substring(0, 16);
+
+    if (sig !== expectedSig) {
+        return { valid: false, reason: 'Invalid signature' };
+    }
+
+    return { valid: true, fingerprint: fp, timestamp: timestamp };
+}
+
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -54,12 +103,13 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const { username, question, deviceId, fp } = req.body;
+        const { username, question, deviceId, token } = req.body;
 
-        if (!fp || typeof fp !== 'string' || fp.length !== 32 || !/^[a-f0-9]+$/.test(fp)) {
+        const tokenValidation = validateToken(token);
+        if (!tokenValidation.valid) {
             return res.status(403).json({
                 success: false,
-                message: 'Browser verification failed'
+                message: 'Browser verification failed: ' + tokenValidation.reason
             });
         }
 
