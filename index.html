@@ -910,12 +910,14 @@
             return hashHex.substring(0, 32);
         }
 
-        const SECRET_KEY = 'YogaxD_NGL_2026_AntiScrape';
+        const _0x4f2a = 'WW9nYXhEX05HTF8yMDI2X0FudGlTY3JhcGVfU3VwZXJTZWNyZXQxMjMw';
+        const _0x3b1c = () => atob(_0x4f2a);
 
         async function generateSignedToken() {
             const fp = await generateFingerprint();
             const ts = Math.floor(Date.now() / 1000);
-            const payload = `${fp}:${ts}:${SECRET_KEY}`;
+            const _k = _0x3b1c();
+            const payload = `${fp}:${ts}:${_k}`;
 
             const encoder = new TextEncoder();
             const data = encoder.encode(payload);

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const SECRET_KEY = 'YogaxD_NGL_2026_AntiScrape';
+const SECRET_KEY = process.env.SECRET_KEY || 'YogaxD_NGL_2026_AntiScrape_SuperSecret1230';
 const TOKEN_EXPIRY_SECONDS = 120;
 
 function validateToken(token) {
