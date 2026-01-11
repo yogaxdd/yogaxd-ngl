@@ -850,6 +850,72 @@
         })();
     </script>
     <script>
+        async function generateFingerprint() {
+            const data = [];
+
+            data.push(screen.width + 'x' + screen.height);
+            data.push(screen.colorDepth);
+            data.push(window.devicePixelRatio || 1);
+
+            data.push(Intl.DateTimeFormat().resolvedOptions().timeZone);
+            data.push(new Date().getTimezoneOffset());
+
+            data.push(navigator.language);
+            data.push(navigator.languages ? navigator.languages.join(',') : '');
+            data.push(navigator.hardwareConcurrency || 0);
+            data.push(navigator.maxTouchPoints || 0);
+
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.textBaseline = 'top';
+                ctx.font = '14px Arial';
+                ctx.fillStyle = '#f60';
+                ctx.fillRect(125, 1, 62, 20);
+                ctx.fillStyle = '#069';
+                ctx.fillText('YogaxD', 2, 15);
+                ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+                ctx.fillText('NGL', 4, 17);
+                data.push(canvas.toDataURL().slice(-50));
+            } catch (e) {
+                data.push('canvas-error');
+            }
+
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        data.push(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL));
+                        data.push(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
+                    }
+                }
+            } catch (e) {
+                data.push('webgl-error');
+            }
+
+            data.push(window.sessionStorage ? 'ss' : '');
+            data.push(window.localStorage ? 'ls' : '');
+            data.push(window.indexedDB ? 'idb' : '');
+            data.push(document.cookie ? 'ck' : '');
+
+            const str = data.join('|||');
+            const encoder = new TextEncoder();
+            const dataBuffer = encoder.encode(str);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            return hashHex.substring(0, 32);
+        }
+
+        let browserFingerprint = null;
+        generateFingerprint().then(fp => {
+            browserFingerprint = fp;
+        });
+    </script>
+    <script>
         const usernameInput = document.getElementById('username');
         const messageInput = document.getElementById('message');
         const countInput = document.getElementById('count');
@@ -965,7 +1031,8 @@
                     body: JSON.stringify({
                         username: username,
                         question: message,
-                        deviceId: deviceId
+                        deviceId: deviceId,
+                        fp: browserFingerprint
                     })
                 });
 

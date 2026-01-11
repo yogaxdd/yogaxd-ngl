@@ -37,29 +37,7 @@ module.exports = async function handler(req, res) {
         });
     }
 
-    const origin = req.headers['origin'] || '';
-    const referer = req.headers['referer'] || '';
     const xRequestedWith = req.headers['x-requested-with'] || '';
-
-    const allowedOrigins = [
-        'https://yogaxd-ngl.vercel.app',
-        'https://yogaxd-ngl.zone.id',
-        'http://localhost',
-        'http://127.0.0.1'
-    ];
-
-    const isAllowedOrigin = allowedOrigins.some(allowed =>
-        origin.includes(allowed.replace('https://', '').replace('http://', '')) ||
-        referer.includes(allowed.replace('https://', '').replace('http://', ''))
-    );
-
-    if (!isAllowedOrigin && origin !== '' && !origin.includes('localhost') && !origin.includes('127.0.0.1')) {
-        return res.status(403).json({
-            success: false,
-            message: 'Unauthorized origin'
-        });
-    }
-
     if (xRequestedWith !== 'XMLHttpRequest') {
         return res.status(403).json({
             success: false,
@@ -76,7 +54,14 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const { username, question, deviceId } = req.body;
+        const { username, question, deviceId, fp } = req.body;
+
+        if (!fp || typeof fp !== 'string' || fp.length !== 32 || !/^[a-f0-9]+$/.test(fp)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Browser verification failed'
+            });
+        }
 
         if (!username || !question) {
             return res.status(400).json({
